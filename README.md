@@ -2,6 +2,9 @@
 
 A working prototype covering all 10 design challenges from the case study brief, a greenfield client/CPA tax platform, built with React + TypeScript + Vite, no backend, fully mocked data.
 
+**Live app:** https://taxflow-case-study.vercel.app
+**Video walkthrough:** [video-walkthrough.mp4](./video-walkthrough.mp4)
+
 ## Running it
 
 ```bash
