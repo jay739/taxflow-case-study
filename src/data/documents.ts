@@ -1,0 +1,122 @@
+import type { TaxDocument } from "../types";
+
+export const DOCUMENTS: TaxDocument[] = [
+  {
+    id: "doc_w2_brightpath",
+    returnId: "ret_maria_2025",
+    name: "W-2: Brightpath Logistics Inc.",
+    type: "W-2",
+    uploadedBy: "u_client_maria",
+    uploadedAt: "2026-06-02T18:04:00Z",
+    status: "verified",
+    pages: [{ page: 1, imageLabel: "W-2, page 1 of 1", ocrConfidence: 0.97 }],
+    linkedFieldIds: ["fld_wages", "fld_fed_withholding", "fld_ss_withholding"],
+    linkedTaskIds: [],
+    linkedMessageIds: ["msg_w2_confirm"],
+  },
+  {
+    id: "doc_1099int_ridgeline",
+    returnId: "ret_maria_2025",
+    name: "1099-INT: Ridgeline Credit Union",
+    type: "1099-INT",
+    uploadedBy: "u_client_maria",
+    uploadedAt: "2026-07-08T10:20:00Z",
+    status: "needs_attention",
+    pages: [
+      { page: 1, imageLabel: "1099-INT, page 1 of 1", ocrConfidence: 0.62 },
+    ],
+    linkedFieldIds: ["fld_interest_income"],
+    linkedTaskIds: ["task_confirm_1099int"],
+    linkedMessageIds: ["msg_1099int_question"],
+  },
+  {
+    id: "doc_1098_mortgage",
+    returnId: "ret_maria_2025",
+    name: "1098: Mortgage Interest Statement",
+    type: "1098",
+    uploadedBy: "u_client_maria",
+    uploadedAt: "2026-06-10T09:00:00Z",
+    status: "extracted",
+    pages: [
+      { page: 1, imageLabel: "1098, page 1 of 2", ocrConfidence: 0.94 },
+      {
+        page: 2,
+        imageLabel: "1098, page 2 of 2, escrow detail",
+        ocrConfidence: 0.89,
+      },
+    ],
+    linkedFieldIds: ["fld_mortgage_interest"],
+  },
+  {
+    id: "doc_childcare_receipt",
+    returnId: "ret_maria_2025",
+    name: "Sunrise Childcare: Annual Statement",
+    type: "Receipt",
+    uploadedBy: "u_client_maria",
+    uploadedAt: "2026-07-01T16:45:00Z",
+    status: "needs_attention",
+    pages: [
+      {
+        page: 1,
+        imageLabel: "Annual statement, page 1 of 1",
+        ocrConfidence: 0.71,
+      },
+    ],
+    linkedFieldIds: ["fld_childcare_expense"],
+    linkedTaskIds: ["task_confirm_ein"],
+    linkedMessageIds: ["msg_childcare_ein"],
+  },
+  {
+    id: "doc_1099nec_freelance",
+    returnId: "ret_maria_2025",
+    name: "1099-NEC: Northwind Design Co.",
+    type: "1099-NEC",
+    uploadedBy: "u_client_maria",
+    uploadedAt: "2026-06-18T13:10:00Z",
+    status: "verified",
+    pages: [
+      { page: 1, imageLabel: "1099-NEC, page 1 of 1", ocrConfidence: 0.99 },
+    ],
+    linkedFieldIds: ["fld_freelance_income"],
+  },
+];
+
+export const DOC_PLACEHOLDER_LINES: Record<string, string[]> = {
+  doc_w2_brightpath: [
+    "Brightpath Logistics Inc.",
+    "1200 Harbor Way, Tacoma, WA 98421",
+    "Employee: Maria Delgado           SSN: XXX-XX-4471",
+    "1  Wages, tips, other compensation ......... 68,420.00",
+    "2  Federal income tax withheld ............. 7,910.00",
+    "3  Social security wages ................... 68,420.00",
+    "4  Social security tax withheld ............ 4,242.04",
+    "6  Medicare tax withheld ................... 992.09",
+  ],
+  doc_1099int_ridgeline: [
+    "Ridgeline Credit Union",
+    "PAYER'S TIN: 91-XXXXXXX",
+    "RECIPIENT: Maria Delgado",
+    "1  Interest income ........................ 214.[?]0   <- smudged, low OCR confidence",
+    "4  Federal income tax withheld ............. 0.00",
+  ],
+  doc_1098_mortgage: [
+    "Meridian Home Lending",
+    "Borrower: Maria Delgado",
+    "Property: 44 Larkspur Ct, Renton WA",
+    "1  Mortgage interest received .............. 9,140.55",
+    "10  Property taxes (if disbursed from escrow) 4,300.00",
+  ],
+  doc_childcare_receipt: [
+    "Sunrise Childcare Center",
+    "123 Bloom St, Renton WA",
+    "Provider Tax ID: [not printed on statement]",
+    "Annual care total for: Lucas Delgado",
+    "Total paid 2025 .......................... 6,800.00",
+  ],
+  doc_1099nec_freelance: [
+    "Northwind Design Co.",
+    "PAYER'S TIN: 84-XXXXXXX",
+    "RECIPIENT: Maria Delgado",
+    "1  Nonemployee compensation ................ 3,150.00",
+  ],
+};

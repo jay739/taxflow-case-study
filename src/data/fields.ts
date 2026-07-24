@@ -1,0 +1,171 @@
+import type { ReturnField } from "../types";
+
+export const FIELDS: ReturnField[] = [
+  {
+    id: "fld_wages",
+    returnId: "ret_maria_2025",
+    formSection: "Form 1040",
+    lineLabel: "Line 1a: Total wages (Box 1 of W-2s)",
+    value: "$68,420.00",
+    state: "verified",
+    source: {
+      documentId: "doc_w2_brightpath",
+      page: 1,
+      boxLabel: "Box 1: Wages, tips, other compensation",
+      snippetText: "1  Wages, tips, other compensation ......... 68,420.00",
+      coordinates: { x: 12, y: 38, w: 55, h: 6 },
+    },
+    transform: { label: "Copied directly from W-2 Box 1" },
+    editableBy: ["preparer", "reviewer"],
+    lastTouchedBy: "u_preparer_dana",
+    lastTouchedAt: "2026-07-10T15:02:00Z",
+  },
+  {
+    id: "fld_fed_withholding",
+    returnId: "ret_maria_2025",
+    formSection: "Form 1040",
+    lineLabel: "Line 25a: Federal income tax withheld (W-2)",
+    value: "$7,910.00",
+    state: "verified",
+    source: {
+      documentId: "doc_w2_brightpath",
+      page: 1,
+      boxLabel: "Box 2: Federal income tax withheld",
+      snippetText: "2  Federal income tax withheld ............. 7,910.00",
+      coordinates: { x: 12, y: 46, w: 55, h: 6 },
+    },
+    transform: { label: "Copied directly from W-2 Box 2" },
+    editableBy: ["preparer", "reviewer"],
+    lastTouchedBy: "u_preparer_dana",
+    lastTouchedAt: "2026-07-10T15:02:00Z",
+  },
+  {
+    id: "fld_ss_withholding",
+    returnId: "ret_maria_2025",
+    formSection: "Worksheet",
+    lineLabel: "Social Security tax withheld (info only)",
+    value: "$4,242.04",
+    state: "locked",
+    source: {
+      documentId: "doc_w2_brightpath",
+      page: 1,
+      boxLabel: "Box 4: Social security tax withheld",
+      snippetText: "4  Social security tax withheld ............ 4,242.04",
+      coordinates: { x: 12, y: 54, w: 55, h: 6 },
+    },
+    transform: {
+      label:
+        "Copied directly from W-2 Box 4. Locked, informational, not editable on the return itself.",
+    },
+    editableBy: [],
+  },
+  {
+    id: "fld_interest_income",
+    returnId: "ret_maria_2025",
+    formSection: "Form 1040",
+    lineLabel: "Line 2b: Taxable interest",
+    value: "$214.90",
+    state: "needs_review",
+    confidence: 0.58,
+    source: {
+      documentId: "doc_1099int_ridgeline",
+      page: 1,
+      boxLabel: "Box 1: Interest income",
+      snippetText: "1  Interest income ........................ 214.[?]0",
+      coordinates: { x: 12, y: 34, w: 55, h: 6 },
+    },
+    transform: { label: "Copied directly from 1099-INT Box 1" },
+    editableBy: ["preparer", "reviewer", "client"],
+    aiNote:
+      "The last digit before the decimal is partially obscured in the scan. The model read it as '9' with moderate confidence, but it could plausibly be '3' or '8'.",
+    aiEvidence: [
+      "Character-level OCR confidence on that digit: 61%",
+      "Surrounding digits (2, 1, 4) all read above 95% confidence",
+      "No prior-year 1099-INT on file from this payer to cross-check against",
+    ],
+    flagReason:
+      "Low OCR confidence on one digit of the interest amount, so confirm against the original statement.",
+  },
+  {
+    id: "fld_mortgage_interest",
+    returnId: "ret_maria_2025",
+    formSection: "Schedule A",
+    lineLabel: "Line 8a: Home mortgage interest",
+    value: "$9,140.55",
+    state: "ai_extracted",
+    confidence: 0.94,
+    source: {
+      documentId: "doc_1098_mortgage",
+      page: 1,
+      boxLabel: "Box 1: Mortgage interest received",
+      snippetText: "1  Mortgage interest received .............. 9,140.55",
+      coordinates: { x: 12, y: 30, w: 55, h: 6 },
+    },
+    transform: { label: "Copied directly from 1098 Box 1" },
+    editableBy: ["preparer", "reviewer"],
+  },
+  {
+    id: "fld_childcare_expense",
+    returnId: "ret_maria_2025",
+    formSection: "Form 2441",
+    lineLabel: "Line 2: Qualifying childcare expenses",
+    value: "$6,800.00",
+    state: "needs_review",
+    confidence: 0.81,
+    source: {
+      documentId: "doc_childcare_receipt",
+      page: 1,
+      boxLabel: "Annual total paid",
+      snippetText: "Total paid 2025 .......................... 6,800.00",
+      coordinates: { x: 12, y: 44, w: 55, h: 6 },
+    },
+    transform: { label: "Copied directly from provider's annual statement" },
+    editableBy: ["preparer", "reviewer", "client"],
+    aiNote:
+      "The dollar amount read cleanly, but the provider's Tax ID (EIN) is not printed anywhere on this statement, and Form 2441 requires it.",
+    aiEvidence: [
+      "Amount field OCR confidence: 96%",
+      "No EIN or SSN field found on the document at all, so this isn't a low-confidence read, it's simply missing",
+      "Form 2441 instructions require a valid provider EIN or SSN to claim this credit",
+    ],
+    flagReason:
+      "Provider EIN missing from the source document, and it's required for Form 2441.",
+  },
+  {
+    id: "fld_freelance_income",
+    returnId: "ret_maria_2025",
+    formSection: "Schedule C",
+    lineLabel: "Line 1: Gross receipts (Northwind Design Co.)",
+    value: "$3,150.00",
+    state: "verified",
+    source: {
+      documentId: "doc_1099nec_freelance",
+      page: 1,
+      boxLabel: "Box 1: Nonemployee compensation",
+      snippetText: "1  Nonemployee compensation ................ 3,150.00",
+      coordinates: { x: 12, y: 34, w: 55, h: 6 },
+    },
+    transform: { label: "Copied directly from 1099-NEC Box 1" },
+    editableBy: ["preparer", "reviewer"],
+    lastTouchedBy: "u_preparer_dana",
+    lastTouchedAt: "2026-07-11T09:40:00Z",
+  },
+  {
+    id: "fld_agi",
+    returnId: "ret_maria_2025",
+    formSection: "Form 1040",
+    lineLabel: "Line 11: Adjusted gross income",
+    value: "$71,784.90",
+    state: "calculated",
+    transform: {
+      label:
+        "Sum of wages, interest, and freelance income (Schedule 1), less adjustments",
+      formula: "fld_wages + fld_interest_income + fld_freelance_income",
+    },
+    editableBy: [],
+  },
+];
+
+export const FIELDS_BY_RETURN = (returnId: string) =>
+  FIELDS.filter((f) => f.returnId === returnId);
+export const FIELD_BY_ID = (id: string) => FIELDS.find((f) => f.id === id);
